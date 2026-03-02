@@ -2,15 +2,14 @@ package com.example.tickets;
 
 import java.util.regex.Pattern;
 
-/**
- * Central place for validation helpers.
- *
- * Students can extend this as needed.
- */
 public final class Validation {
 
-    private static final Pattern EMAIL = Pattern.compile("^[^@\s]+@[^@\s]+\.[^@\s]+$");
-    private static final Pattern TICKET_ID = Pattern.compile("^[A-Z0-9-]+$");
+    // FIXED: double escaping
+    private static final Pattern EMAIL =
+            Pattern.compile("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
+
+    private static final Pattern TICKET_ID =
+            Pattern.compile("^[A-Z0-9-]+$");
 
     private Validation() {}
 
@@ -42,7 +41,7 @@ public final class Validation {
     }
 
     public static void requireOneOf(String value, String fieldName, String... allowed) {
-        if (value == null) return; // optional
+        if (value == null) return;
         for (String a : allowed) {
             if (a.equals(value)) return;
         }
@@ -50,7 +49,7 @@ public final class Validation {
     }
 
     public static void requireRange(Integer value, int min, int max, String fieldName) {
-        if (value == null) return; // optional
+        if (value == null) return;
         if (value < min || value > max) {
             throw new IllegalArgumentException(fieldName + " must be between " + min + " and " + max);
         }
