@@ -19,8 +19,16 @@ public class MarkerStyleFactory {
 
     public MarkerStyle get(String shape, String color, int size, boolean filled) {
         String key = shape + "|" + color + "|" + size + "|" + (filled ? "F" : "O");
+
         // TODO: return cached instance if present; otherwise create, cache, and return.
-        return new MarkerStyle(shape, color, size, filled);
+        MarkerStyle style = cache.get(key);
+
+        if (style == null) {
+            style = new MarkerStyle(shape, color, size, filled);
+            cache.put(key, style);
+        }
+
+        return style;
     }
 
     public int cacheSize() {

@@ -9,14 +9,12 @@ public class HostelFeeCalculator {
     public HostelFeeCalculator(FakeBookingRepo repo) {
         this.repo = repo;
 
-        // Room pricing wiring (Java 8 compatible)
         roomPricingMap = new HashMap<>();
         roomPricingMap.put(LegacyRoomTypes.SINGLE, new SingleRoomPricing());
         roomPricingMap.put(LegacyRoomTypes.DOUBLE, new DoubleRoomPricing());
         roomPricingMap.put(LegacyRoomTypes.TRIPLE, new TripleRoomPricing());
         roomPricingMap.put(LegacyRoomTypes.DELUXE, new DeluxeRoomPricing());
 
-        // Add-on pricing wiring (Java 8 compatible)
         addOnPricingMap = new HashMap<>();
         addOnPricingMap.put(AddOn.MESS, new MessPricing());
         addOnPricingMap.put(AddOn.LAUNDRY, new LaundryPricing());
