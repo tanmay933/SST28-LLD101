@@ -1,4 +1,4 @@
-package com.example.metrics;
+package com.example;
 
 import java.lang.reflect.Constructor;
 

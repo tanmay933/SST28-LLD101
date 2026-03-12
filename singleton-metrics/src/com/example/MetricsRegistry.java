@@ -1,4 +1,4 @@
-package com.example.metrics;
+package com.example;
 
 import java.io.Serial;
 import java.io.Serializable;

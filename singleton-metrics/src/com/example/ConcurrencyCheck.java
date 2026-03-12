@@ -1,4 +1,4 @@
-package com.example.metrics;
+package com.example;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
