@@ -1,4 +1,4 @@
-# Singleton Design Pattern (LLD Notes)
+# Singleton Design Pattern (LLD Notes - Java)
 
 --------------------------------
 WHAT IS SINGLETON
@@ -52,126 +52,107 @@ Cons
 Example:
 
 class Singleton {
-private:
 
-    static Singleton* instance;
+    private static Singleton instance;
 
-    Singleton() {
-        cout << "Singleton Constructor Called!" << endl;
+    private Singleton() {
+        System.out.println("Singleton Constructor Called!");
     }
 
-public:
+    public static Singleton getInstance() {
 
-    static Singleton* getInstance() {
-
-        if(instance == nullptr) {
+        if (instance == null) {
             instance = new Singleton();
         }
 
         return instance;
     }
-};
-
-Singleton* Singleton::instance = nullptr;
+}
 
 
 --------------------------------
-2. THREAD SAFE SINGLETON (LOCK)
+2. THREAD SAFE SINGLETON (SYNCHRONIZED)
 --------------------------------
 
 Problem with lazy singleton:
 Two threads may create two objects.
 
 Solution:
-Use mutex locking.
+Use synchronized method.
 
 Pros
 - thread safe
 
 Cons
-- slower (lock every call)
+- slower (method locked every call)
 
 Example:
 
 class Singleton {
-private:
 
-    static Singleton* instance;
-    static mutex mtx;
+    private static Singleton instance;
 
-    Singleton() {
-        cout << "Singleton Constructor Called!" << endl;
+    private Singleton() {
+        System.out.println("Singleton Constructor Called!");
     }
 
-public:
+    public static synchronized Singleton getInstance() {
 
-    static Singleton* getInstance() {
-
-        lock_guard<mutex> lock(mtx);
-
-        if(instance == nullptr) {
+        if (instance == null) {
             instance = new Singleton();
         }
 
         return instance;
     }
-};
-
-Singleton* Singleton::instance = nullptr;
-mutex Singleton::mtx;
+}
 
 
 --------------------------------
 3. DOUBLE CHECK LOCKING
 --------------------------------
 
-Optimization over thread-safe version.
+Optimization over synchronized method.
 
 Idea:
 Lock ONLY when instance is null.
 
 Pros
 - thread safe
-- faster than full lock
+- faster than full synchronization
 
 Example:
 
 class Singleton {
-private:
 
-    static Singleton* instance;
-    static mutex mtx;
+    private static volatile Singleton instance;
 
-    Singleton() {
-        cout << "Singleton Constructor Called!" << endl;
+    private Singleton() {
+        System.out.println("Singleton Constructor Called!");
     }
 
-public:
+    public static Singleton getInstance() {
 
-    static Singleton* getInstance() {
+        if (instance == null) {
 
-        if(instance == nullptr) {
+            synchronized (Singleton.class) {
 
-            lock_guard<mutex> lock(mtx);
+                if (instance == null) {
+                    instance = new Singleton();
+                }
 
-            if(instance == nullptr) {
-                instance = new Singleton();
             }
         }
 
         return instance;
     }
-};
-
-Singleton* Singleton::instance = nullptr;
-mutex Singleton::mtx;
+}
 
 
 --------------------------------
 4. EAGER INITIALIZATION SINGLETON
 --------------------------------
 
-Instance created when program starts.
+Instance created when class loads.
 
 Pros
 - thread safe
@@ -183,39 +164,37 @@ Cons
 Example:
 
 class Singleton {
-private:
 
-    static Singleton* instance;
+    private static final Singleton instance = new Singleton();
 
-    Singleton() {
-        cout << "Singleton Constructor Called!" << endl;
+    private Singleton() {
+        System.out.println("Singleton Constructor Called!");
     }
 
-public:
-
-    static Singleton* getInstance() {
+    public static Singleton getInstance() {
         return instance;
     }
-};
-
-Singleton* Singleton::instance = new Singleton();
+}
 
 
 --------------------------------
 SIMPLE TEST
 --------------------------------
 
-int main() {
+public class Main {
 
-    Singleton* s1 = Singleton::getInstance();
-    Singleton* s2 = Singleton::getInstance();
+    public static void main(String[] args) {
 
-    cout << (s1 == s2) << endl;
+        Singleton s1 = Singleton.getInstance();
+        Singleton s2 = Singleton.getInstance();
 
+        System.out.println(s1 == s2);
+
+    }
 }
 
 Output:
-1  (true → same object)
+true  (same object)
 
 
 --------------------------------
