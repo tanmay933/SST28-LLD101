@@ -41,16 +41,45 @@ public final class IncidentTicket {
     }
 
     // Getters
-    public String getId() { return id; }
-    public String getReporterEmail() { return reporterEmail; }
-    public String getTitle() { return title; }
-    public String getDescription() { return description; }
-    public String getPriority() { return priority; }
-    public List<String> getTags() { return tags; }
-    public String getAssigneeEmail() { return assigneeEmail; }
-    public boolean isCustomerVisible() { return customerVisible; }
-    public Integer getSlaMinutes() { return slaMinutes; }
-    public String getSource() { return source; }
+    public String getId() {
+        return id;
+    }
+
+    public String getReporterEmail() {
+        return reporterEmail;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public String getAssigneeEmail() {
+        return assigneeEmail;
+    }
+
+    public boolean isCustomerVisible() {
+        return customerVisible;
+    }
+
+    public Integer getSlaMinutes() {
+        return slaMinutes;
+    }
+
+    public String getSource() {
+        return source;
+    }
 
     @Override
     public String toString() {
@@ -84,7 +113,8 @@ public final class IncidentTicket {
         private Integer slaMinutes;
         private String source = "CLI";
 
-        public Builder() {}
+        public Builder() {
+        }
 
         private Builder(IncidentTicket t) {
             this.id = t.id;
